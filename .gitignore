@@ -1,0 +1,13 @@
+_Resharper*
+
+# Arquivos do Visual Studio
+*.suo
+*.csproj.user
+[Bb]in
+[Oo]bj
+Backup/*
+
+*.less.debug.css
+
+
+*.user

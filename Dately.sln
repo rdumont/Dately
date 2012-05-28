@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dately", "Dately\Dately.csproj", "{EE9838F7-3DAD-4F24-9C3D-B6DBAA42D013}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{743148DC-C477-445C-9DC2-44A182CD5475}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE9838F7-3DAD-4F24-9C3D-B6DBAA42D013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE9838F7-3DAD-4F24-9C3D-B6DBAA42D013}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE9838F7-3DAD-4F24-9C3D-B6DBAA42D013}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE9838F7-3DAD-4F24-9C3D-B6DBAA42D013}.Release|Any CPU.Build.0 = Release|Any CPU
+		{743148DC-C477-445C-9DC2-44A182CD5475}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{743148DC-C477-445C-9DC2-44A182CD5475}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{743148DC-C477-445C-9DC2-44A182CD5475}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{743148DC-C477-445C-9DC2-44A182CD5475}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
