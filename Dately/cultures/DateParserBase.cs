@@ -8,19 +8,23 @@ namespace RDumont.Dately.Cultures
         protected DateTime? TryToUseNamedDays(string text, Dictionary<string,int> namedDays)
         {
             if (namedDays.ContainsKey(text))                return DateTime.Today.AddDays(namedDays[text]);
-            var splitBySpace = text.Split(new[] {' '}, 2);
-            if (splitBySpace.Length >= 2 && namedDays.ContainsKey(splitBySpace[0]))
+            foreach (var named in namedDays)
             {
-                DateTime relativeOffset;
-
-                if (DateTime.TryParse(splitBySpace[1], out relativeOffset))
+                if (text.StartsWith(named.Key + " "))
                 {
-                    var baseDate = DateTime.Today.AddDays(namedDays[splitBySpace[0]]);
+                    var rest = text.Substring(named.Key.Length + 1);
 
+                    DateTime relativeOffset;
+
+                    if (DateTime.TryParse(rest, out relativeOffset))
                     {
-                        return new DateTime(
-                            baseDate.Year, baseDate.Month, baseDate.Day,
-                            relativeOffset.Hour, relativeOffset.Minute, relativeOffset.Second, relativeOffset.Millisecond);
+                        var baseDate = DateTime.Today.AddDays(namedDays[named.Key]);
+
+                        {
+                            return new DateTime(
+                                baseDate.Year, baseDate.Month, baseDate.Day,
+                                relativeOffset.Hour, relativeOffset.Minute, relativeOffset.Second, relativeOffset.Millisecond);
+                        }
                     }
                 }
             }
