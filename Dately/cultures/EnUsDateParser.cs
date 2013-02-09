@@ -16,7 +16,7 @@ namespace RDumont.Dately.Cultures
             get { return "English (US)"; }
         }
 
-        public DateTime Parse(string text)
+        protected override DateTime DoLanguageSpecificParse(string text)
         {
             text = text.Trim().ToLower();
             var match = Regex.Match(text, @"^(?<amount>\d+) (?<unit>\w+) ago$", RegexOptions.IgnoreCase);
@@ -36,8 +36,8 @@ namespace RDumont.Dately.Cultures
             }
 
             if (text == "now") return DateTime.Now;
-            
-            var namedDayResult = TryToUseNamedDays(text, new Dictionary<string,int>()
+
+            var namedDayResult = TryToUseNamedDays(text, new Dictionary<string, int>()
             {
                 {"today", 0},
                 {"tomorrow", 1},

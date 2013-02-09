@@ -51,6 +51,12 @@ namespace RDumont.Dately.Tests.cultures
             Helpers.AssertDate(GetParser(), "tomorrow 01:02:03 PM", expectedTime);
         }
 
+        [Test]
+        public void ShouldUseSystemDateTimeWhenItWorks()
+        {
+            Helpers.AssertDate(GetParser(), "02/06/2013 11:22:02 pm", new DateTime(2013, 2, 6, 23, 22, 2));
+        }
+
         #endregion
 
         #region Hours

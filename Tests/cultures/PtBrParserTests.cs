@@ -104,7 +104,5 @@ namespace RDumont.Dately.Tests.cultures
 
             Helpers.AssertDate(GetParser(), "depois de amanhã 01:02:03 PM", expectedTime);
         }
-
     }
-
 }

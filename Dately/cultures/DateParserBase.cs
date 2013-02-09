@@ -3,9 +3,22 @@ using System.Collections.Generic;
 
 namespace RDumont.Dately.Cultures
 {
-    public class DateParserBase
+    public abstract class DateParserBase
     {
-        protected DateTime? TryToUseNamedDays(string text, Dictionary<string,int> namedDays)
+        public DateTime Parse(string text)
+        {
+            DateTime systemParsed;
+            if (DateTime.TryParse(text, out systemParsed))
+            {
+                return systemParsed;
+            }
+
+            return DoLanguageSpecificParse(text);
+        }
+
+        protected abstract DateTime DoLanguageSpecificParse(string text);
+
+        protected DateTime? TryToUseNamedDays(string text, Dictionary<string, int> namedDays)
         {
             if (namedDays.ContainsKey(text))                return DateTime.Today.AddDays(namedDays[text]);
             foreach (var named in namedDays)

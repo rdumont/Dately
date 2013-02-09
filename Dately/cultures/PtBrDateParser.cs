@@ -16,7 +16,7 @@ namespace RDumont.Dately.Cultures
             get { return "Português Brasileiro"; }
         }
 
-        public DateTime Parse(string text)
+        protected override DateTime DoLanguageSpecificParse(string text)
         {
             text = text.Trim().ToLower();
             var match = Regex.Match(text, @"^(?<amount>\d+) (?<unit>\w+) atrás$", RegexOptions.IgnoreCase);
