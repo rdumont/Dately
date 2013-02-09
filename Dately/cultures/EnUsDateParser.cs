@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace RDumont.Dately.Cultures
@@ -34,13 +35,37 @@ namespace RDumont.Dately.Cultures
                 return ResultingTime(amount, unit);
             }
 
-            if (text == "today") return DateTime.Today;
             if (text == "now") return DateTime.Now;
-            if (text == "tomorrow") return DateTime.Today.AddDays(1);
-            if (text == "yesterday") return DateTime.Today.AddDays(-1);
+            
+            if (NamedDays.ContainsKey(text))
+            {
+                return DateTime.Today.AddDays(NamedDays[text]);
+            }
+
+            var splitBySpace = text.Split(new [] {' '}, 2);
+            if (NamedDays.ContainsKey(splitBySpace[0]))
+            {
+                DateTime relativeOffset;
+
+                if (DateTime.TryParse(splitBySpace[1], out relativeOffset))
+                {
+                    var baseDate = DateTime.Today.AddDays(NamedDays[splitBySpace[0]]);
+
+                    return new DateTime(
+                        baseDate.Year, baseDate.Month, baseDate.Day, 
+                        relativeOffset.Hour, relativeOffset.Minute, relativeOffset.Second, relativeOffset.Millisecond);
+                }
+            }
 
             throw new FormatException("Unknown date format");
         }
+
+        Dictionary<string,int> NamedDays = new Dictionary<string,int>()
+        {
+            {"today", 0},
+            {"tomorrow", 1},
+            {"yesterday", -1}
+        };
 
         private DateTime ResultingTime(int amount, string unit)
         {
