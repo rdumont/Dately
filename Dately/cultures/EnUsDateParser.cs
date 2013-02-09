@@ -1,9 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace RDumont.Dately.Cultures
 {
-    public class EnUsDateParser : IDateParser
+    public class EnUsDateParser : DateParserBase, IDateParser
     {
         public string Culture
         {
@@ -15,7 +16,7 @@ namespace RDumont.Dately.Cultures
             get { return "English (US)"; }
         }
 
-        public DateTime Parse(string text)
+        protected override DateTime DoLanguageSpecificParse(string text)
         {
             text = text.Trim().ToLower();
             var match = Regex.Match(text, @"^(?<amount>\d+) (?<unit>\w+) ago$", RegexOptions.IgnoreCase);
@@ -34,10 +35,19 @@ namespace RDumont.Dately.Cultures
                 return ResultingTime(amount, unit);
             }
 
-            if (text == "today") return DateTime.Today;
             if (text == "now") return DateTime.Now;
-            if (text == "tomorrow") return DateTime.Today.AddDays(1);
-            if (text == "yesterday") return DateTime.Today.AddDays(-1);
+
+            var namedDayResult = TryToUseNamedDays(text, new Dictionary<string, int>()
+            {
+                {"today", 0},
+                {"tomorrow", 1},
+                {"yesterday", -1}
+            });
+
+            if (namedDayResult.HasValue)
+            {
+                return namedDayResult.Value;
+            }
 
             throw new FormatException("Unknown date format");
         }

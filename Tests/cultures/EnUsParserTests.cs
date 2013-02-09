@@ -41,6 +41,22 @@ namespace RDumont.Dately.Tests.cultures
             Helpers.AssertDate(GetParser(), "tomorrow", DateTime.Today.AddDays(1));
         }
 
+        [Test]
+        public void ShouldUseSystemDateTimeForCompoundSupport()
+        {
+            var tomorrow = DateTime.Today.AddDays(1);
+
+            var expectedTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 13, 2, 3, DateTimeKind.Local);
+
+            Helpers.AssertDate(GetParser(), "tomorrow 01:02:03 PM", expectedTime);
+        }
+
+        [Test]
+        public void ShouldUseSystemDateTimeWhenItWorks()
+        {
+            Helpers.AssertDate(GetParser(), "02/06/2013 11:22:02 pm", new DateTime(2013, 2, 6, 23, 22, 2));
+        }
+
         #endregion
 
         #region Hours

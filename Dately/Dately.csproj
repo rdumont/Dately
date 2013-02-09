@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractDateParser.cs" />
+    <Compile Include="cultures\DateParserBase.cs" />
     <Compile Include="cultures\EnUsDateParser.cs" />
     <Compile Include="cultures\PtBrDateParser.cs" />
     <Compile Include="DateType.cs" />

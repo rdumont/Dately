@@ -94,6 +94,15 @@ namespace RDumont.Dately.Tests.cultures
         {
             Helpers.AssertDate(GetParser(), dias + " dias atrás", DateTime.Now.AddDays(-dias));
         }
-    }
 
+        [Test]
+        public void ShouldUseSystemDateTimeForCompoundSupport()
+        {
+            var dayAfterTomorrow = DateTime.Today.AddDays(2);
+
+            var expectedTime = new DateTime(dayAfterTomorrow.Year, dayAfterTomorrow.Month, dayAfterTomorrow.Day, 13, 2, 3, DateTimeKind.Local);
+
+            Helpers.AssertDate(GetParser(), "depois de amanhã 01:02:03 PM", expectedTime);
+        }
+    }
 }
