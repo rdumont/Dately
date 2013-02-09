@@ -42,7 +42,7 @@ namespace RDumont.Dately.Tests.cultures
         }
 
         [Test]
-        public void ShouldUseDateTimeForCompoundSupport()
+        public void ShouldUseSystemDateTimeForCompoundSupport()
         {
             var tomorrow = DateTime.Today.AddDays(1);
 

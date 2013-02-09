@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace RDumont.Dately.Cultures
 {
-    public class EnUsDateParser : IDateParser
+    public class EnUsDateParser : DateParserBase, IDateParser
     {
         public string Culture
         {
@@ -37,35 +37,20 @@ namespace RDumont.Dately.Cultures
 
             if (text == "now") return DateTime.Now;
             
-            if (NamedDays.ContainsKey(text))
+            var namedDayResult = TryToUseNamedDays(text, new Dictionary<string,int>()
             {
-                return DateTime.Today.AddDays(NamedDays[text]);
-            }
+                {"today", 0},
+                {"tomorrow", 1},
+                {"yesterday", -1}
+            });
 
-            var splitBySpace = text.Split(new [] {' '}, 2);
-            if (NamedDays.ContainsKey(splitBySpace[0]))
+            if (namedDayResult.HasValue)
             {
-                DateTime relativeOffset;
-
-                if (DateTime.TryParse(splitBySpace[1], out relativeOffset))
-                {
-                    var baseDate = DateTime.Today.AddDays(NamedDays[splitBySpace[0]]);
-
-                    return new DateTime(
-                        baseDate.Year, baseDate.Month, baseDate.Day, 
-                        relativeOffset.Hour, relativeOffset.Minute, relativeOffset.Second, relativeOffset.Millisecond);
-                }
+                return namedDayResult.Value;
             }
 
             throw new FormatException("Unknown date format");
         }
-
-        Dictionary<string,int> NamedDays = new Dictionary<string,int>()
-        {
-            {"today", 0},
-            {"tomorrow", 1},
-            {"yesterday", -1}
-        };
 
         private DateTime ResultingTime(int amount, string unit)
         {

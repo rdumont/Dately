@@ -1,9 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace RDumont.Dately.Cultures
 {
-    public class PtBrDateParser : IDateParser
+    public class PtBrDateParser : DateParserBase, IDateParser
     {
         public string Culture
         {
@@ -34,12 +35,21 @@ namespace RDumont.Dately.Cultures
                 return ResultingTime(amount, unit);
             }
 
-            if (text == "hoje") return DateTime.Today;
             if (text == "agora") return DateTime.Now;
-            if (text == "amanhã") return DateTime.Today.AddDays(1);
-            if (text == "ontem") return DateTime.Today.AddDays(-1);
-            if (text == "depois de amanhã") return DateTime.Today.AddDays(2);
-            if (text == "anteontem") return DateTime.Today.AddDays(-2);
+
+            var namedDayResult = TryToUseNamedDays(text, new Dictionary<string, int>()
+            {
+                {"hoje", 0},
+                {"amanhã", 1},
+                {"ontem", -1},
+                {"depois de amanhã", 2},
+                {"anteontem",-2}
+            });
+
+            if (namedDayResult.HasValue)
+            {
+                return namedDayResult.Value;
+            }
 
             throw new FormatException("Unknown date format");
         }
